@@ -142,16 +142,6 @@ pip install pyinstaller
 pyinstaller --onefile --windowed --icon=resources/icon.ico hara_tool/main.py
 ```
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Support
-
-For issues, questions, or contributions, please visit:
-- GitHub Issues: https://github.com/your-org/hara-tool/issues
-- Documentation: https://github.com/your-org/hara-tool/wiki
-
 ## Authors
 
 - SafeLinkInnovations team and Jayanth Mani
