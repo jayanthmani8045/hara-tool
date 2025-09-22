@@ -154,7 +154,7 @@ For issues, questions, or contributions, please visit:
 
 ## Authors
 
-- Automotive Safety Systems Team
+- SafeLinkInnovations team and Jayanth Mani
 
 ## Acknowledgments
 
