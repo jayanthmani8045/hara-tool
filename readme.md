@@ -2,6 +2,8 @@
 
 A professional automation tool for **Hazard Analysis and Risk Assessment (HARA)** with automated **ASIL (Automotive Safety Integrity Level)** determination according to ISO 26262 standards.
 
+[![Preview](https://github.com/jayanthmani8045/hara-tool/blob/main/preview/Success_Execution_Image.png)](https://github.com/jayanthmani8045/hara-tool/blob/main/preview/Success_Execution_Image.png)
+
 ## Features
 
 - **Automated ASIL Determination**: Built-in ISO 26262 ASIL determination table
