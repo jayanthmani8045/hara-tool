@@ -1,0 +1,6 @@
+# Core dependencies
+pandas
+openpyxl
+PySide6
+fuzzywuzzy
+python-Levenshtein
