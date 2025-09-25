@@ -4,6 +4,156 @@ A professional automation tool for **Hazard Analysis and Risk Assessment (HARA)*
 
 [![Preview](https://github.com/jayanthmani8045/hara-tool/blob/main/preview/Success_Execution_Image.png)](https://github.com/jayanthmani8045/hara-tool/blob/main/preview/Success_Execution_Image.png)
 
+## UML
+
+```mermaid
+classDiagram
+    class HARAMainWindow {
+        -user_file: str
+        -result_df: DataFrame
+        -advanced_settings: Dict
+        -processor: ExcelProcessor
+        -file_label: QLabel
+        -os_combo: QComboBox
+        -ra_combo: QComboBox
+        -result_table: QTableWidget
+        -log_text: QTextEdit
+        -progress_bar: QProgressBar
+        +init_ui()
+        +browse_file()
+        +load_sheets()
+        +process_data()
+        +display_results(df)
+        +save_results()
+        +export_results()
+        +log(message)
+        +update_progress(value)
+        +on_process_complete(df)
+        +on_process_error(msg)
+        +show_advanced_settings()
+    }
+
+    class AdvancedMatchingDialog {
+        -case_sensitive: QCheckBox
+        -strip_whitespace: QCheckBox
+        -os_weight: QSpinBox
+        -hazard_weight: QSpinBox
+        +init_ui()
+    }
+
+    class ExcelProcessor {
+        <<QThread>>
+        -user_file: str
+        -os_sheet: str
+        -ra_sheet: str
+        -matcher: FuzzyMatcher
+        -os_weight: float
+        -hazard_weight: float
+        +progress: Signal
+        +log: Signal
+        +finished: Signal
+        +error: Signal
+        +run()
+        +process_operating_scenarios(df)
+        +match_risk_assessment(df, ra_df)
+        +determine_asil(df)
+        +find_column_case_insensitive(df, name)
+        +diagnose_s_c_values(df, s_col, c_col)
+    }
+
+    class FuzzyMatcher {
+        -enabled: bool
+        -threshold: int
+        -algorithm: str
+        -case_sensitive: bool
+        -strip_whitespace: bool
+        +prepare_string(text) str
+        +calculate_score(str1, str2) int
+        +find_best_match(target, candidates, column, secondary_column, weights) Tuple
+        +match_dataframes(source_df, target_df, match_columns, os_weight, hazard_weight) DataFrame
+    }
+
+    class constants {
+        <<module>>
+        +ASIL_DETERMINATION_TABLE: Dict
+        +ASIL_COLORS: Dict
+        +DEFAULT_SETTINGS: Dict
+        +COLUMN_MAPPINGS: Dict
+        +PARAMETER_RANGES: Dict
+    }
+
+    class styles {
+        <<module>>
+        +DARK_THEME: str
+        +TITLE_STYLE: str
+        +SUBTITLE_STYLE: str
+        +FILE_LABEL_STYLE_DEFAULT: str
+        +FILE_LABEL_STYLE_SELECTED: str
+        +PROCESS_BUTTON_STYLE: str
+        +FUZZY_CHECKBOX_STYLE: str
+        +THRESHOLD_LABEL_STYLE: str
+        +STATUS_LABEL_STYLE: str
+        +INFO_LABEL_STYLE: str
+    }
+
+    class main {
+        <<module>>
+        +main() void
+    }
+
+    class QMainWindow {
+        <<PySide6>>
+    }
+
+    class QDialog {
+        <<PySide6>>
+    }
+
+    class QThread {
+        <<PySide6>>
+    }
+
+    class pandas {
+        <<external>>
+        +DataFrame
+        +ExcelFile
+        +ExcelWriter
+    }
+
+    class fuzzywuzzy {
+        <<external>>
+        +fuzz.ratio()
+        +fuzz.partial_ratio()
+        +fuzz.token_sort_ratio()
+        +fuzz.token_set_ratio()
+    }
+
+    %% Inheritance relationships
+    HARAMainWindow --|> QMainWindow : inherits
+    AdvancedMatchingDialog --|> QDialog : inherits
+    ExcelProcessor --|> QThread : inherits
+
+    %% Composition/Association relationships
+    HARAMainWindow "1" *-- "1" ExcelProcessor : creates/uses
+    HARAMainWindow "1" ..> "0..*" AdvancedMatchingDialog : creates
+    ExcelProcessor "1" *-- "1" FuzzyMatcher : contains
+    
+    %% Dependency relationships
+    HARAMainWindow ..> styles : imports
+    HARAMainWindow ..> constants : imports
+    ExcelProcessor ..> constants : imports
+    ExcelProcessor ..> pandas : uses
+    FuzzyMatcher ..> fuzzywuzzy : uses
+    FuzzyMatcher ..> pandas : uses
+    main ..> HARAMainWindow : instantiates
+
+    %% Notes
+    note for HARAMainWindow "Main GUI window that manages\nthe entire application flow\nand user interactions"
+    
+    note for ExcelProcessor "Background thread for\nprocessing Excel files\nwithout blocking UI"
+    
+    note for FuzzyMatcher "Handles fuzzy string matching\nwith configurable algorithms:\n- Ratio\n- Partial Ratio\n- Token Sort\n- Token Set"
+
 ## Features
 
 - **Automated ASIL Determination**: Built-in ISO 26262 ASIL determination table
