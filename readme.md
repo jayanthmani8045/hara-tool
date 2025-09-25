@@ -153,6 +153,7 @@ classDiagram
     note for ExcelProcessor "Background thread for\nprocessing Excel files\nwithout blocking UI"
     
     note for FuzzyMatcher "Handles fuzzy string matching\nwith configurable algorithms:\n- Ratio\n- Partial Ratio\n- Token Sort\n- Token Set"
+```
 
 ## Features
 
